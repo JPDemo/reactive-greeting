@@ -1,0 +1,56 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+}
+plugins {
+    id 'java-library'
+    id 'org.springframework.boot' version "${springBootVersion}"
+    id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
+}
+
+allprojects {
+    group = 'jpdemo.reactive-greeting'
+    version = '0.0.1-SNAPSHOT'
+    sourceCompatibility = '11'
+}
+
+subprojects {
+
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'java-library'
+    apply plugin: 'java'
+
+    dependencies{
+        annotationProcessor 'org.projectlombok:lombok'
+    }
+
+    repositories {
+        mavenCentral()
+        maven {
+            name = "proto GitHubPackages"
+            url = 'https://maven.pkg.github.com/JPDemo/proto'
+            credentials {
+                // The credentials (described in the next section)
+                username = project.findProperty("gpr.user")
+                password = project.findProperty("gpr.key")
+            }
+        }
+    }
+    test {
+        useJUnitPlatform()
+    }
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+    }
+
+
+
+}
+
+bootJar {
+    enabled = false
+}

@@ -1,0 +1,6 @@
+rootProject.name = 'reactive-greeting'
+
+include 'services'
+include 'rsocket-greeting'
+include 'rsocket-client-greeting'
+include 'rest-greeting'
