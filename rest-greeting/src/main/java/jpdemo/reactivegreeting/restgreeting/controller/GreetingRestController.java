@@ -1,6 +1,5 @@
 package jpdemo.reactivegreeting.restgreeting.controller;
 
-import com.google.protobuf.Empty;
 import jpdemo.proto.greeting.v1.GreetingRequest;
 import jpdemo.proto.greeting.v1.GreetingResponse;
 import jpdemo.reactivegreeting.service.greeting.DefaultGreetingService;
