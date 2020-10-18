@@ -32,7 +32,6 @@ subprojects {
             name = "proto GitHubPackages"
             url = 'https://maven.pkg.github.com/JPDemo/proto'
             credentials {
-                // The credentials (described in the next section)
                 username = project.findProperty("gpr.user")
                 password = project.findProperty("gpr.key")
             }
