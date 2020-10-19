@@ -8,6 +8,7 @@ import io.rsocket.frame.decoder.ZeroCopyPayloadDecoder;
 import io.rsocket.transport.netty.client.TcpClientTransport;
 import jpdemo.proto.greeting.v1.GreetingRequest;
 import jpdemo.proto.greeting.v1.GreetingServiceClient;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -30,6 +31,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 
 @Configuration
+@RequiredArgsConstructor
 @Slf4j
 public class ClientRSocketConfig {
 
@@ -38,6 +40,7 @@ public class ClientRSocketConfig {
 
     @Value("${jpdemo.rsocket-greeting.service.port}")
     private int helloServicePort;
+
 
 
     @Bean
@@ -61,11 +64,6 @@ public class ClientRSocketConfig {
                 .block();
     }
 
-
-    GreetingServiceClient GreetingServiceClient(RSocket rSocket){
-        var greetingServiceClient = new GreetingServiceClient(rSocket);
-        return greetingServiceClient;
-    }
 
 
 
