@@ -1,6 +1,6 @@
 dependencies {
 // The reference to our published library artifact
-	compile "jpdemo:proto:1.4"
+	//compile "jpdemo:proto:1.4"
 	implementation 'org.springframework.boot:spring-boot-starter'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'

@@ -8,13 +8,9 @@ import jpdemo.proto.greeting.v1.GreetingService;
 import jpdemo.proto.greeting.v1.GreetingSetup;
 import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
-import org.springframework.boot.autoconfigure.web.ServerProperties;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
-import java.util.Arrays;
-import java.util.concurrent.ThreadLocalRandom;
 
 @Slf4j
 @Service
@@ -31,7 +27,7 @@ public class DefaultGreetingService implements GreetingService {
 
     /***
      * Greeting request-response
-     * @param greetingRequest
+     * @param greetingRequest: a greeting request
      * @param byteBuf
      * @return
      */
@@ -43,7 +39,7 @@ public class DefaultGreetingService implements GreetingService {
 
     /***
      * Greetings channel
-     * @param requests
+     * @param requests: a flux greeting request
      * @param byteBuf
      * @return
      */
@@ -54,7 +50,7 @@ public class DefaultGreetingService implements GreetingService {
 
     /***
      * Greeting fire and forget
-     * @param greetingRequest
+     * @param greetingRequest: a greeting request
      * @param byteBuf
      * @return
      */

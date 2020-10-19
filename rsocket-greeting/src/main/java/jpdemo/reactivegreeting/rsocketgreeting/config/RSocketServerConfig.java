@@ -25,8 +25,6 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class RSocketServerConfig {
 
- /*   private final RSocket rSocket;
-    private final GreetingServiceServer serviceServer;*/
 
     @Bean
     public RSocketMessageHandler rsocketMessageHandler(RSocketStrategies rSocketStrategies) {
@@ -53,12 +51,6 @@ public class RSocketServerConfig {
                 .build();
     }
 
-
-    GreetingServiceServer greetingServiceServer(){
-        var server = new GreetingServiceServer(new DefaultGreetingService(),null,null);
-
-        return server;
-    }
 
 
 }

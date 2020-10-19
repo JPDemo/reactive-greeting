@@ -24,6 +24,7 @@ subprojects {
 
     dependencies{
         annotationProcessor 'org.projectlombok:lombok'
+        compile "jpdemo:proto:1.5"
     }
 
     repositories {
