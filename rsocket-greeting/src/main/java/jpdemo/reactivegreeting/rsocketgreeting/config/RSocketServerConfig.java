@@ -61,10 +61,4 @@ public class RSocketServerConfig {
     }
 
 
-/*
-    @Bean
-    RSocketRequester rSocketRequester(RSocketStrategies rSocketStrategies) {
-        return RSocketRequester.wrap(rSocket(), MimeTypeUtils.APPLICATION_JSON, rSocketStrategies);
-    }*/
-
 }

@@ -8,6 +8,7 @@ import io.rsocket.frame.decoder.ZeroCopyPayloadDecoder;
 import io.rsocket.transport.netty.client.TcpClientTransport;
 import jpdemo.proto.greeting.v1.GreetingRequest;
 import jpdemo.proto.greeting.v1.GreetingServiceClient;
+import jpdemo.proto.greeting.v1.GreetingSetup;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -45,14 +46,12 @@ public class ClientRSocketConfig {
 
     @Bean
     RSocketRequester connectToGreetingService() {
-        LocalDate timestamp = LocalDate.now();
-        log.info("Connecting to greeting service with connection timestamp of {}",timestamp);
-
-        var init = GreetingRequest.newBuilder().setName("Michael").build();
+        var config = GreetingSetup.newBuilder().setLocale(GreetingSetup.LocaleType.LOCALE_EN).build();
+        log.info("Connecting to greeting service with config: {}",config.toString());
 
         return RSocketRequester.builder()
-                .setupRoute("greeting.setup2")
-                .setupData(init)
+                .setupRoute("greeting.setup")
+                .setupData(config)
                 .dataMimeType(MimeTypeUtils.ALL)
                 .rsocketStrategies(builder -> {
                     builder.encoder(new ProtobufEncoder());
@@ -61,20 +60,6 @@ public class ClientRSocketConfig {
                     builder.decoder(new ProtobufDecoder());
                 })
                 .connectTcp(helloServiceHostname, helloServicePort)
-                .block();
-    }
-
-
-
-
-    RSocket rSocket() {
-        return RSocketFactory
-                .connect()
-                .metadataMimeType("message/x.rsocket.composite-metadata.v0")
-                .frameDecoder(PayloadDecoder.ZERO_COPY)
-                .dataMimeType(MimeTypeUtils.APPLICATION_JSON_VALUE)
-                .transport(TcpClientTransport.create(helloServiceHostname, helloServicePort))
-                .start()
                 .block();
     }
 
