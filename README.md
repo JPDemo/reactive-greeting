@@ -1,5 +1,16 @@
 # reactive-greeting
 
+Demo reactive rsocket spring boot application. 
+
+
+Work in progress.
+
+Need to
+Add unit test
+Add examples for all channel types
+Add workflow
+
+
 Resources
 
 https://dzone.com/articles/reactive-service-to-service-communication-with-rso-3
