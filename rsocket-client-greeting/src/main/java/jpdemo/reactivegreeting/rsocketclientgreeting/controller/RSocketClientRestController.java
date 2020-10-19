@@ -17,7 +17,7 @@ import reactor.core.publisher.Mono;
 public class RSocketClientRestController {
 
     private final GreetingAdaptor adaptor;
-    private final GreetingServiceClient greetingServiceClient;
+
 
     @GetMapping("")
     public String connection(){
@@ -35,12 +35,12 @@ public class RSocketClientRestController {
         return adaptor.greetingChannel();
     }*/
 
-    @GetMapping("log")
+/*    @GetMapping("log")
     public void greetingLog(@RequestParam(value = "name", defaultValue = "World") String name){
         log.info("Greeting service log request response received with name {}",name);
         var request = GreetingRequest.newBuilder().setName(name).build();
         greetingServiceClient.logGreeting(request,null);
-    }
+    }*/
   /*
     @GetMapping("stream")
     public Flux<String> randomGreetings(){

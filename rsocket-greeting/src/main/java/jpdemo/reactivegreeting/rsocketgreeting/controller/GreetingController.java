@@ -4,6 +4,7 @@ package jpdemo.reactivegreeting.rsocketgreeting.controller;
 import com.google.protobuf.Empty;
 import jpdemo.proto.greeting.v1.GreetingRequest;
 import jpdemo.proto.greeting.v1.GreetingResponse;
+import jpdemo.proto.greeting.v1.GreetingSetup;
 import jpdemo.reactivegreeting.service.greeting.DefaultGreetingService;
 import jpdemo.reactivegreeting.service.randomgreeting.DefaultRandomGreetingService;
 import lombok.RequiredArgsConstructor;
@@ -30,9 +31,8 @@ public class GreetingController {
     private String intString;  // value is assigned during SETUP frame
 
     @ConnectMapping("greeting.setup")
-    public void setup(LocalDate timestamp){
-        connectionInitiation = timestamp;
-        log.info("Setup complete -  start timestamp "+connectionInitiation);
+    public void setup(GreetingSetup config){
+        greetingService.setup(config);
     }
 
     @ConnectMapping("greeting.setup2")
