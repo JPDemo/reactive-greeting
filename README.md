@@ -5,10 +5,10 @@ Demo reactive rsocket spring boot application.
 
 Work in progress.
 
-Need to
-Add unit test
-Add examples for all channel types
-Add workflow
+Need to:
+- [ ] Add unit test
+- [ ] Add examples for all channel types
+- [ ] Add workflow
 
 
 Resources
