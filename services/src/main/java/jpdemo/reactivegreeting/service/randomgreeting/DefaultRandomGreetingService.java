@@ -33,7 +33,7 @@ public class DefaultRandomGreetingService implements RandomGreetingService {
     }
 
     private String randomNameGenerator() {
-        var names = Arrays.asList("Jason", "Nicola", "Sophie", "Marianne", "Bob", "John");
+        var names = Arrays.asList("Odin", "Thor", "Frigg", "Balder", "Loki", "Freya");
         return names.get(ThreadLocalRandom.current().nextInt(0, names.size() - 1));
     }
 

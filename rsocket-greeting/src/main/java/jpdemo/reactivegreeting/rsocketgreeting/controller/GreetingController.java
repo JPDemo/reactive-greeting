@@ -13,10 +13,13 @@ import org.reactivestreams.Publisher;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.rsocket.annotation.ConnectMapping;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.time.LocalDate;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 
 @Controller
@@ -27,19 +30,20 @@ public class GreetingController {
     private final DefaultGreetingService greetingService;
     private final DefaultRandomGreetingService randomGreetingService;
 
-    private LocalDate connectionInitiation;  // value is assigned during SETUP frame
-    private String intString;  // value is assigned during SETUP frame
+    private LocalDateTime connectionInitiation;  // value is assigned during SETUP frame
 
     @ConnectMapping("greeting.setup")
     public void setup(GreetingSetup config){
+
+        Assert.notNull(config,"Config should not be null");
         greetingService.setup(config);
+        var tStamp = config.getInitiated();
+        connectionInitiation = Instant
+                .ofEpochSecond(tStamp.getSeconds(),tStamp.getNanos())
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime();
     }
 
-    @ConnectMapping("greeting.setup2")
-    public void setup2(GreetingRequest request){
-        intString = request.getName();
-        log.info("Setup complete -  init val "+intString);
-    }
 
     @MessageMapping("greeting.request")
     public Mono<GreetingResponse> greetingRequestResponse(GreetingRequest request){

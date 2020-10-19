@@ -30,27 +30,26 @@ public class RSocketClientRestController {
         return adaptor.greetingRequestResponse(name);
     }
 
-   /* @GetMapping("channel")
+   @GetMapping("channel")
     public Flux<String> greetingChannel(){
         return adaptor.greetingChannel();
-    }*/
+    }
 
-/*    @GetMapping("log")
+    @GetMapping("log")
     public void greetingLog(@RequestParam(value = "name", defaultValue = "World") String name){
         log.info("Greeting service log request response received with name {}",name);
-        var request = GreetingRequest.newBuilder().setName(name).build();
-        greetingServiceClient.logGreeting(request,null);
-    }*/
-  /*
+        adaptor.logGreeting(name);
+    }
+
     @GetMapping("stream")
     public Flux<String> randomGreetings(){
-        return randomGreetingService.randomGreetings(null,null).map(response -> (response.getGreeting()+"\n"));
+        return adaptor.randomGreetingsStream();
     }
 
     @GetMapping("random")
     public Mono<String> randomGreeting(){
-        return randomGreetingService.randomGreeting(null,null).map(response -> response.getGreeting());
-    }*/
+        return adaptor.randomGreetingRequest();
+    }
 
 
 }
