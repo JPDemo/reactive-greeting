@@ -9,6 +9,7 @@ Need to:
 - [ ] Add unit test
 - [ ] Add examples for all channel types
 - [ ] Add workflow
+- [ ] Code coverage integration (https://codecov.io/)
 
 
 Resources
