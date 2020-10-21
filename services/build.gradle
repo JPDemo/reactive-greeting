@@ -5,6 +5,7 @@ dependencies {
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
+	testCompile 'org.assertj:assertj-core:3.11.1'
 }
 
 
@@ -15,4 +16,10 @@ bootJar {
 
 jar {
 	enabled = true
+}
+
+sourceSets{
+	test{
+		java.srcDirs = ['src/test/java/unit','src/test/java/integration','src/test/java/utils']
+	}
 }

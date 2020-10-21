@@ -17,19 +17,24 @@ import reactor.core.publisher.Mono;
 public class DefaultGreetingService implements GreetingService {
 
 
-
+    private GreetingSetup config;
     private GreetingSetup.LocaleType locale;
 
-    public void setup(GreetingSetup setup){
-        log.info("Config setup invoked with {}",setup.toString());
+    public void setup(GreetingSetup setup) {
+        log.info("Config setup invoked with {}", setup.toString());
+        config = setup;
         locale = setup.getLocale();
+    }
+
+    public GreetingSetup getConfig() {
+        return config;
     }
 
     /***
      * Greeting request-response
      * @param greetingRequest: a greeting request
-     * @param byteBuf
-     * @return
+     * @param byteBuf: not used
+     * @return : Mono GreetingResponse
      */
     @Override
     public Mono<GreetingResponse> greeting(GreetingRequest greetingRequest, ByteBuf byteBuf) {
@@ -40,8 +45,8 @@ public class DefaultGreetingService implements GreetingService {
     /***
      * Greetings channel
      * @param requests: a flux greeting request
-     * @param byteBuf
-     * @return
+     * @param byteBuf: not used
+     * @return : Flux GreetingResponse
      */
     @Override
     public Flux<GreetingResponse> greetings(Publisher<GreetingRequest> requests, ByteBuf byteBuf) {
@@ -51,8 +56,8 @@ public class DefaultGreetingService implements GreetingService {
     /***
      * Greeting fire and forget
      * @param greetingRequest: a greeting request
-     * @param byteBuf
-     * @return
+     * @param byteBuf: not used
+     * @return : Mono<Empty>
      */
     @Override
     public Mono<Empty> logGreeting(GreetingRequest greetingRequest, ByteBuf byteBuf) {
@@ -61,10 +66,10 @@ public class DefaultGreetingService implements GreetingService {
         return Mono.just(Empty.newBuilder().build());
     }
 
-    private String getGreeting(){
+    private String getGreeting() {
 
         String greeting;
-        switch (locale){
+        switch (locale) {
             case LOCALE_EN -> greeting = "Hi ";
             case LOCALE_DE -> greeting = "Guten tag ";
             case LOCALE_ES -> greeting = "Hola ";
@@ -73,8 +78,4 @@ public class DefaultGreetingService implements GreetingService {
 
         return greeting;
     }
-
-
-
-
 }
