@@ -25,6 +25,9 @@ subprojects {
     dependencies{
         annotationProcessor 'org.projectlombok:lombok'
         compile "jpdemo:proto:1.5"
+        // https://mvnrepository.com/artifact/io.projectreactor/reactor-core
+        testCompile group: 'io.projectreactor', name: 'reactor-test', version: '3.3.10.RELEASE'
+
     }
 
     repositories {
