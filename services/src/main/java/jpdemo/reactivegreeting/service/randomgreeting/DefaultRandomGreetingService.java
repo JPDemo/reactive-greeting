@@ -16,6 +16,7 @@ import java.util.concurrent.ThreadLocalRandom;
 @Slf4j
 @Service
 public class DefaultRandomGreetingService implements RandomGreetingService {
+
     @Override
     public Flux<GreetingResponse> randomGreetings(RandomGreetingRequest randomGreetingRequest, ByteBuf byteBuf) {
         log.info("Random greeting stream request received");
