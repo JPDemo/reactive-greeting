@@ -19,12 +19,12 @@ sourceSets{
 }
 
 
-/*bootJar {
+bootJar {
 	//library module, so no boot jar required
 	enabled = false
 }
 
 jar {
 	enabled = true
-}*/
+}
 
