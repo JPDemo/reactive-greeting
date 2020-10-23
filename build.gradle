@@ -9,10 +9,20 @@ plugins {
     id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
 }
 
+dependencyManagement {
+    imports {
+        mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
+    }
+}
+
 allprojects {
     group = 'jpdemo.reactive-greeting'
     version = '0.0.1-SNAPSHOT'
-    sourceCompatibility = '11'
+    sourceCompatibility = '14'
+
+    task hello { task -> println "I'm $task.project.name" }
+
+
 }
 
 subprojects {
@@ -21,14 +31,6 @@ subprojects {
     apply plugin: 'io.spring.dependency-management'
     apply plugin: 'java-library'
     apply plugin: 'java'
-
-    dependencies{
-        annotationProcessor 'org.projectlombok:lombok'
-        compile "jpdemo:proto:1.5"
-        // https://mvnrepository.com/artifact/io.projectreactor/reactor-core
-        testCompile group: 'io.projectreactor', name: 'reactor-test', version: '3.3.10.RELEASE'
-
-    }
 
     repositories {
         mavenCentral()
@@ -41,6 +43,20 @@ subprojects {
             }
         }
     }
+
+
+    dependencies{
+        annotationProcessor 'org.projectlombok:lombok'
+        implementation "jpdemo:proto:1.5"
+        // https://mvnrepository.com/artifact/io.projectreactor/reactor-core
+        testCompile group: 'io.projectreactor', name: 'reactor-test', version: '3.3.10.RELEASE'
+       /* testImplementation('org.springframework.boot:spring-boot-starter-test') {
+            exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+        }
+        testCompile 'org.assertj:assertj-core:3.11.1'*/
+    }
+
+
     test {
         useJUnitPlatform()
     }
@@ -52,8 +68,11 @@ subprojects {
 
 
 
+
+/*    test.useTestNG()*/
 }
 
 bootJar {
     enabled = false
 }
+

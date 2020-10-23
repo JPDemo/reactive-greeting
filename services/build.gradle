@@ -1,21 +1,15 @@
+plugins{
+	id 'java'
+}
+
 dependencies {
 // The reference to our published library artifact
 	//compile "jpdemo:proto:1.4"
-	implementation 'org.springframework.boot:spring-boot-starter'
+	compile 'org.springframework.boot:spring-boot-starter'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
 	testCompile 'org.assertj:assertj-core:3.11.1'
-}
-
-
-bootJar {
-	//library module, so no boot jar required
-	enabled = false
-}
-
-jar {
-	enabled = true
 }
 
 sourceSets{
@@ -23,3 +17,14 @@ sourceSets{
 		java.srcDirs = ['src/test/java/unit','src/test/java/integration','src/test/java/utils']
 	}
 }
+
+
+/*bootJar {
+	//library module, so no boot jar required
+	enabled = false
+}
+
+jar {
+	enabled = true
+}*/
+

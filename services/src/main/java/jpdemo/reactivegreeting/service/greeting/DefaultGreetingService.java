@@ -18,7 +18,7 @@ public class DefaultGreetingService implements GreetingService {
 
 
     private GreetingSetup config;
-    private GreetingSetup.LocaleType locale;
+    private GreetingSetup.LocaleType locale = GreetingSetup.LocaleType.LOCALE_UNSET;
 
     public void setup(GreetingSetup setup) {
         log.info("Config setup invoked with {}", setup.toString());
@@ -68,7 +68,7 @@ public class DefaultGreetingService implements GreetingService {
 
     private String getGreeting() {
 
-        String greeting;
+        String greeting ;
         switch (locale) {
             case LOCALE_EN -> greeting = "Hi ";
             case LOCALE_DE -> greeting = "Guten tag ";
