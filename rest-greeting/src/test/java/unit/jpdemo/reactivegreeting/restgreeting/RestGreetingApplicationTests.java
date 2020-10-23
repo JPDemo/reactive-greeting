@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
-@Import({jpdemo.reactivegreeting.service.greeting.DefaultGreetingService.class,jpdemo.reactivegreeting.service.randomgreeting.DefaultRandomGreetingService.class})
+@Import({DefaultGreetingService.class, DefaultRandomGreetingService.class})
 @SpringBootTest(classes = {DefaultGreetingService.class, DefaultRandomGreetingService.class})
 class RestGreetingApplicationTests {
 
