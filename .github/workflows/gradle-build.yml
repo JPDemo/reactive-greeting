@@ -8,10 +8,14 @@ on:
     branches:
       - main
       - 'feature/**'
+    paths:
+      - '!.github/**'    
   pull_request:
     branches:
       - main
       - 'feature/**'
+    paths:
+      - '!.github/**'
 
 jobs:
   build:
