@@ -38,10 +38,10 @@ subprojects {
             name = "proto GitHubPackages"
             url = 'https://maven.pkg.github.com/JPDemo/proto'
             //not best practice, as risk checking in password
-            /*credentials {
-                username = project.findProperty("gpr.user")
-                password = project.findProperty("gpr.key")
-            }*/
+            credentials {
+                username = System.getenv("GITHUB_ACTOR")
+                password = System.getenv("GITHUB_TOKEN")
+            }
         }
     }
 
