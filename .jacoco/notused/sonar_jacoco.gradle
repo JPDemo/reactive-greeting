@@ -1,0 +1,40 @@
+apply plugin: 'jacoco'
+apply plugin: 'java'
+
+jacoco{
+    toolVersion =  "0.8.6"
+}
+
+configurations {
+    itTest
+}
+
+jacocoTestReport{
+    FileTree sourceTree = files().asFileTree
+    FileTree classTree = files().asFileTree
+    otherProjects.each {
+        sourceTree += project(it).sourceSets.main.allJava
+        classTree += project(it).sourceSets.main.output.asFileTree
+    }
+    additionalSourceDirs = sourceTree
+    additionalClassDirs = classTree
+}
+
+def allTestCoverageFile = "$buildDir/jacoco/allTestCoverage.exec"
+def allITCoverageFile = "$buildDir/jacoco/allITCoverage.exec"
+
+task jacocoMergeTest(type:JacocoMerge) {
+    destinationFile = file(allTestCoverageFile)
+    executionData = project.fileTree(dir: '.', include:'**/build/jacoco/test.exec')
+}
+
+task jacocoMergeIntegrationTest(type:JacocoMerge) {
+    destinationFile = file(allITCoverageFile)
+    // merge all the it coverage outputs from all projects into one
+    executionData = project.fileTree(dir: '.', includes: ['**/build/jacoco/itTest.exec'])
+}
+
+task jacocoMerge(dependsOn: ['jacocoMergeTest', 'jacocoMergeIntegrationTest']) {
+    // used to run the other merge tasks
+}
+

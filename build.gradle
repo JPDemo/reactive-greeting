@@ -7,7 +7,10 @@ plugins {
     id 'java-library'
     id 'org.springframework.boot' version "${springBootVersion}"
     id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
+
 }
+
+
 
 dependencyManagement {
     imports {
@@ -22,9 +25,10 @@ allprojects {
 
     task hello { task -> println "I'm $task.project.name" }
 
-
 }
-
+repositories {
+    mavenCentral()
+}
 subprojects {
 
     apply plugin: 'org.springframework.boot'
@@ -66,7 +70,9 @@ subprojects {
         }
     }
 
-
+    afterEvaluate { project ->
+        project.apply from: '../.jacoco/jacoco.gradle'
+    }
 
 
 /*    test.useTestNG()*/
@@ -76,3 +82,4 @@ bootJar {
     enabled = false
 }
 
+//apply from: 'jacoco2.gradle'
