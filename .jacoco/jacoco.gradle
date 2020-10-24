@@ -2,7 +2,7 @@ apply from: '../.jacoco/jacoco-config.gradle'
 apply plugin: 'jacoco'
 
 jacoco {
-    toolVersion =  "0.8.6"
+    toolVersion = "0.8.6"
 }
 
 afterEvaluate { project ->
@@ -17,8 +17,7 @@ afterEvaluate { project ->
             ? project.jacocoCoverageThreshold
             : project.jacocoCoverageThresholdDefault
     setupTestExistenceValidationTask()
-
-        setupReporting()
+    setupReporting()
     setupCoverageVerification(threshold)
 
 }
