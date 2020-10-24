@@ -38,7 +38,9 @@ def setupReporting() {
                 destination file("${buildDir}/coverage-report")
             }
         }
+
     }
+
 }
 
 def setupCoverageVerification(threshold) {
