@@ -1,5 +1,4 @@
 buildscript {
-   // apply from: 'jacoco.gradle'
     repositories {
         mavenCentral()
     }
@@ -26,9 +25,10 @@ allprojects {
 
     task hello { task -> println "I'm $task.project.name" }
 
-
 }
-
+repositories {
+    mavenCentral()
+}
 subprojects {
 
     apply plugin: 'org.springframework.boot'
@@ -70,7 +70,9 @@ subprojects {
         }
     }
 
-
+    afterEvaluate { project ->
+        project.apply from: '../.jacoco/jacoco.gradle'
+    }
 
 
 /*    test.useTestNG()*/
@@ -80,3 +82,4 @@ bootJar {
     enabled = false
 }
 
+//apply from: 'jacoco2.gradle'
