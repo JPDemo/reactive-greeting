@@ -1,7 +1,7 @@
 project.ext {
 
-    //Default threshold
-    jacocoCoverageThresholdDefault = 0.60
+    //Default threshold - 90%
+    jacocoCoverageThresholdDefault = 0.90
 
     //module ignore list
     jacocoIgnoreList = [
