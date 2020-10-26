@@ -15,7 +15,8 @@ sourceSets{
 	}
 }
 
-//Temp override default coverage threshold
+//Override default coverage threshold specified in jacoco-config
+/*
 ext {
 	jacocoCoverageThreshold = 0.0
-}
+}*/

@@ -1,0 +1,40 @@
+apply plugin: 'jacoco'
+apply from: './.jacoco/jacoco-config.gradle'
+
+jacoco {
+    toolVersion = "0.8.6"
+    reportsDir = file("$buildDir/reports/jacoco")
+}
+
+def publishedProjects = subprojects.findAll()
+
+//This JaCoCo coverage task for multi-module Gradle project was inspired by:
+//https://github.com/ben-manes/caffeine/blob/master/build.gradle
+task jacocoRootReport(type: JacocoReport, group: 'Coverage reports') {
+    description = 'Generates an aggregate report from all subprojects'
+    println description
+    dependsOn(publishedProjects.test)
+
+    additionalSourceDirs.setFrom(files(publishedProjects.sourceSets.main.allSource.srcDirs))
+    sourceDirectories.setFrom(files(publishedProjects.sourceSets.main.allSource.srcDirs))
+    classDirectories.setFrom(files(publishedProjects.sourceSets.main.output))
+    //filter out files
+    classDirectories.setFrom(classDirectories.files.collect {
+        fileTree(dir: it,
+                exclude: jacocoFileFilter)
+
+    })
+    executionData.setFrom(files(publishedProjects.jacocoTestReport.executionData))
+    reports {
+        html.enabled = true // human readable
+        xml.enabled = true // required by coveralls
+    }
+
+    doFirst {
+        executionData.setFrom(files(executionData.findAll { it.exists()  }))
+    }
+}
+
+tasks.jacocoTestReport{
+    dependsOn(jacocoRootReport)
+}

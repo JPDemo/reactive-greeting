@@ -1,9 +1,12 @@
-apply from: '../.jacoco/jacoco-config.gradle'
 apply plugin: 'jacoco'
+apply from: '../.jacoco/jacoco-config.gradle'
+
 
 jacoco {
     toolVersion = "0.8.6"
+    reportsDir = file("$buildDir/reports/jacoco")
 }
+
 
 afterEvaluate { project ->
     def ignoreList = jacocoIgnoreList
@@ -12,6 +15,8 @@ afterEvaluate { project ->
         println "Jacoco: ignoring project ${projectName}"
         return false
     }
+
+
 
     def threshold = project.hasProperty('jacocoCoverageThreshold')
             ? project.jacocoCoverageThreshold
@@ -28,16 +33,22 @@ def setupTestExistenceValidationTask() {
 
 def setupReporting() {
     jacocoTestReport {
+
         dependsOn testExistenceValidation
         dependsOn test
         reports {
             csv.enabled false
-            xml.enabled false
-            html {
-                enabled true
-                destination file("${buildDir}/coverage-report")
-            }
+            xml.enabled true
+            html.enabled true
         }
+
+        classDirectories.setFrom(classDirectories.files.collect {
+            fileTree(dir: it,
+                    exclude: jacocoFileFilter)
+
+        })
+
+
 
     }
 
@@ -54,7 +65,13 @@ def setupCoverageVerification(threshold) {
                 }
             }
         }
+        classDirectories.setFrom(classDirectories.files.collect {
+            fileTree(dir: it,
+                    exclude: jacocoFileFilter)
+
+        })
     }
+
 }
 
 class TestExistenceValidation extends DefaultTask {

@@ -23,3 +23,6 @@ http://www.vinsguru.com/rsocket-integrating-with-spring-boot/
 Jacoco config:
 - https://medium.com/swlh/measuring-unit-test-coverage-in-multi-module-android-projects-using-jacoco-part-2-352ef949ecfb
 - https://gist.github.com/fraggjkee/50f351f6ef4b75fea6d20d87dbba7f85
+
+Unit tests
+- https://josdem.io/techtalk/spring/spring_webflux_web_testing/
