@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DefaultRandomGreetingService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">reactive-greeting</a> &gt; <a href="index.source.html" class="el_package">jpdemo.reactivegreeting.service.randomgreeting</a> &gt; <span class="el_source">DefaultRandomGreetingService.java</span></div><h1>DefaultRandomGreetingService.java</h1><pre class="source lang-java linenums">package jpdemo.reactivegreeting.service.randomgreeting;
+
+import io.netty.buffer.ByteBuf;
+import jpdemo.proto.greeting.v1.GreetingResponse;
+import jpdemo.proto.greeting.v1.RandomGreetingRequest;
+import jpdemo.proto.greeting.v1.RandomGreetingService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+import java.time.Duration;
+import java.util.Arrays;
+import java.util.concurrent.ThreadLocalRandom;
+
+<span class="fc" id="L16">@Slf4j</span>
+@Service
+<span class="fc" id="L18">public class DefaultRandomGreetingService implements RandomGreetingService {</span>
+
+    @Override
+    public Flux&lt;GreetingResponse&gt; randomGreetings(RandomGreetingRequest randomGreetingRequest, ByteBuf byteBuf) {
+<span class="fc" id="L22">        log.info(&quot;Random greeting stream request received&quot;);</span>
+<span class="fc" id="L23">        return Flux.interval(Duration.ofSeconds(5)).map(response -&gt; GreetingResponse.newBuilder().setGreeting(randomGreeting()).build()).log();</span>
+    }
+
+    @Override
+    public Mono&lt;GreetingResponse&gt; randomGreeting(RandomGreetingRequest randomGreetingRequest, ByteBuf byteBuf) {
+<span class="fc" id="L28">        log.info(&quot;Random greeting request-response received&quot;);</span>
+<span class="fc" id="L29">        return Mono.just(GreetingResponse.newBuilder().setGreeting(randomGreeting()).build()).log();</span>
+    }
+
+    private String randomGreeting() {
+<span class="fc" id="L33">        return String.format(&quot;%s %s!&quot;, randomGreetingGenerator(), randomNameGenerator());</span>
+    }
+
+    private String randomNameGenerator() {
+<span class="fc" id="L37">        var names = Arrays.asList(&quot;Odin&quot;, &quot;Thor&quot;, &quot;Frigg&quot;, &quot;Balder&quot;, &quot;Loki&quot;, &quot;Freya&quot;);</span>
+<span class="fc" id="L38">        return names.get(ThreadLocalRandom.current().nextInt(0, names.size() - 1));</span>
+    }
+
+    private String randomGreetingGenerator() {
+<span class="fc" id="L42">        var names = Arrays.asList(&quot;Hi&quot;, &quot;Hello&quot;, &quot;Hola&quot;, &quot;Sawabona&quot;, &quot;Hey&quot;);</span>
+<span class="fc" id="L43">        return names.get(ThreadLocalRandom.current().nextInt(0, names.size() - 1));</span>
+    }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

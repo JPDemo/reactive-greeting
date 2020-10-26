@@ -15,5 +15,5 @@ sourceSets{
 
 //Temp override default coverage threshold
 ext {
-	jacocoCoverageThreshold = 0.09
+	jacocoCoverageThreshold = 0.08
 }

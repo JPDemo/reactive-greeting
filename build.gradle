@@ -35,6 +35,7 @@ subprojects {
     apply plugin: 'io.spring.dependency-management'
     apply plugin: 'java-library'
     apply plugin: 'java'
+    apply plugin: 'jacoco'
 
     repositories {
         mavenCentral()
@@ -70,8 +71,9 @@ subprojects {
         }
     }
 
+    //generate jacoco report at sub project level
     afterEvaluate { project ->
-        project.apply from: '../.jacoco/jacoco.gradle'
+        project.apply from: '../.jacoco/subproject-jacoco-report.gradle'
     }
 
 
@@ -82,4 +84,5 @@ bootJar {
     enabled = false
 }
 
-//apply from: 'jacoco2.gradle'
+//generate jacoco report at root level
+apply from: './.jacoco/root-jacoco-report.gradle'

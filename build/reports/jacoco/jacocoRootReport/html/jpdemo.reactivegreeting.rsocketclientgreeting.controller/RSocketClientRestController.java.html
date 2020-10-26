@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RSocketClientRestController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">reactive-greeting</a> &gt; <a href="index.source.html" class="el_package">jpdemo.reactivegreeting.rsocketclientgreeting.controller</a> &gt; <span class="el_source">RSocketClientRestController.java</span></div><h1>RSocketClientRestController.java</h1><pre class="source lang-java linenums">package jpdemo.reactivegreeting.rsocketclientgreeting.controller;
+
+import jpdemo.proto.greeting.v1.GreetingRequest;
+import jpdemo.proto.greeting.v1.GreetingServiceClient;
+import jpdemo.reactivegreeting.rsocketclientgreeting.adaptor.GreetingAdaptor;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+@RestController
+<span class="fc" id="L15">@RequiredArgsConstructor</span>
+<span class="fc" id="L16">@Slf4j</span>
+public class RSocketClientRestController {
+
+    private final GreetingAdaptor adaptor;
+
+
+    @GetMapping(&quot;&quot;)
+    public String connection(){
+<span class="nc" id="L24">        return &quot;Welcome to greeting rsocket rest client&quot;;</span>
+    }
+
+    @GetMapping(&quot;request&quot;)
+    public Mono&lt;String&gt; greetingRequestResponse(@RequestParam(value = &quot;name&quot;, defaultValue = &quot;World&quot;) String name){
+
+<span class="nc" id="L30">        return adaptor.greetingRequestResponse(name);</span>
+    }
+
+   @GetMapping(&quot;channel&quot;)
+    public Flux&lt;String&gt; greetingChannel(){
+<span class="nc" id="L35">        return adaptor.greetingChannel();</span>
+    }
+
+    @GetMapping(&quot;log&quot;)
+    public void greetingLog(@RequestParam(value = &quot;name&quot;, defaultValue = &quot;World&quot;) String name){
+<span class="nc" id="L40">        log.info(&quot;Greeting service log request response received with name {}&quot;,name);</span>
+<span class="nc" id="L41">        adaptor.logGreeting(name);</span>
+<span class="nc" id="L42">    }</span>
+
+    @GetMapping(&quot;stream&quot;)
+    public Flux&lt;String&gt; randomGreetings(){
+<span class="nc" id="L46">        return adaptor.randomGreetingsStream();</span>
+    }
+
+    @GetMapping(&quot;random&quot;)
+    public Mono&lt;String&gt; randomGreeting(){
+<span class="nc" id="L51">        return adaptor.randomGreetingRequest();</span>
+    }
+
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

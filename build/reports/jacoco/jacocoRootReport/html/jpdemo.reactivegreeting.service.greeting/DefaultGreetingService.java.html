@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DefaultGreetingService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">reactive-greeting</a> &gt; <a href="index.source.html" class="el_package">jpdemo.reactivegreeting.service.greeting</a> &gt; <span class="el_source">DefaultGreetingService.java</span></div><h1>DefaultGreetingService.java</h1><pre class="source lang-java linenums">package jpdemo.reactivegreeting.service.greeting;
+
+import com.google.protobuf.Empty;
+import io.netty.buffer.ByteBuf;
+import jpdemo.proto.greeting.v1.GreetingRequest;
+import jpdemo.proto.greeting.v1.GreetingResponse;
+import jpdemo.proto.greeting.v1.GreetingService;
+import jpdemo.proto.greeting.v1.GreetingSetup;
+import lombok.extern.slf4j.Slf4j;
+import org.reactivestreams.Publisher;
+import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+<span class="fc" id="L15">@Slf4j</span>
+@Service
+<span class="fc" id="L17">public class DefaultGreetingService implements GreetingService {</span>
+
+
+    private GreetingSetup config;
+<span class="fc" id="L21">    private GreetingSetup.LocaleType locale = GreetingSetup.LocaleType.LOCALE_UNSET;</span>
+
+    public void setup(GreetingSetup setup) {
+<span class="fc" id="L24">        log.info(&quot;Config setup invoked with {}&quot;, setup.toString());</span>
+<span class="fc" id="L25">        config = setup;</span>
+<span class="fc" id="L26">        locale = setup.getLocale();</span>
+<span class="fc" id="L27">    }</span>
+
+    public GreetingSetup getConfig() {
+<span class="fc" id="L30">        return config;</span>
+    }
+
+    /***
+     * Greeting request-response
+     * @param greetingRequest: a greeting request
+     * @param byteBuf: not used
+     * @return : Mono GreetingResponse
+     */
+    @Override
+    public Mono&lt;GreetingResponse&gt; greeting(GreetingRequest greetingRequest, ByteBuf byteBuf) {
+<span class="fc" id="L41">        log.info(&quot;Greeting request-response received: {} buffer {}&quot;, greetingRequest, byteBuf);</span>
+<span class="fc" id="L42">        return Mono.just(GreetingResponse.newBuilder().setGreeting(getGreeting() + greetingRequest.getName()).build()).log();</span>
+    }
+
+    /***
+     * Greetings channel
+     * @param requests: a flux greeting request
+     * @param byteBuf: not used
+     * @return : Flux GreetingResponse
+     */
+    @Override
+    public Flux&lt;GreetingResponse&gt; greetings(Publisher&lt;GreetingRequest&gt; requests, ByteBuf byteBuf) {
+<span class="fc" id="L53">        return Flux.from(requests).doOnNext(request -&gt; log.info(&quot;Received greetings channel request [{}]&quot;, request)).map(request -&gt; GreetingResponse.newBuilder().setGreeting(getGreeting() + request.getName()).build());</span>
+    }
+
+    /***
+     * Greeting fire and forget
+     * @param greetingRequest: a greeting request
+     * @param byteBuf: not used
+     * @return : Mono&lt;Empty&gt;
+     */
+    @Override
+    public Mono&lt;Empty&gt; logGreeting(GreetingRequest greetingRequest, ByteBuf byteBuf) {
+<span class="fc" id="L64">        log.info(&quot;Greeting fire and forget request received: {} buffer {}&quot;, greetingRequest, byteBuf);</span>
+<span class="fc" id="L65">        log.info(getGreeting() + greetingRequest.getName());</span>
+<span class="fc" id="L66">        return Mono.just(Empty.newBuilder().build());</span>
+    }
+
+    private String getGreeting() {
+
+        String greeting ;
+<span class="fc bfc" id="L72" title="All 4 branches covered.">        switch (locale) {</span>
+<span class="fc" id="L73">            case LOCALE_EN -&gt; greeting = &quot;Hi &quot;;</span>
+<span class="fc" id="L74">            case LOCALE_DE -&gt; greeting = &quot;Guten tag &quot;;</span>
+<span class="fc" id="L75">            case LOCALE_ES -&gt; greeting = &quot;Hola &quot;;</span>
+<span class="fc" id="L76">            default -&gt; greeting = &quot;Hello &quot;;</span>
+        }
+
+<span class="fc" id="L79">        return greeting;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>
