@@ -12,7 +12,7 @@ def publishedProjects = subprojects.findAll()
 //https://github.com/ben-manes/caffeine/blob/master/build.gradle
 task jacocoRootReport(type: JacocoReport, group: 'Coverage reports') {
     description = 'Generates an aggregate report from all subprojects'
-    println description
+
     dependsOn(publishedProjects.test)
 
     additionalSourceDirs.setFrom(files(publishedProjects.sourceSets.main.allSource.srcDirs))

@@ -26,5 +26,9 @@ bootJar {
 
 jar {
 	enabled = true
+	// Since this library is included as a jar in our jib projects, we want the
+    // jar to built reproducibly.
+	preserveFileTimestamps false
+	reproducibleFileOrder true
 }
 
