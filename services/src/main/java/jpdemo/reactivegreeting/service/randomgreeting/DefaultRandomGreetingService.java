@@ -20,7 +20,7 @@ public class DefaultRandomGreetingService implements RandomGreetingService {
     @Override
     public Flux<GreetingResponse> randomGreetings(RandomGreetingRequest randomGreetingRequest, ByteBuf byteBuf) {
         log.info("Random greeting stream request received");
-        return Flux.interval(Duration.ofSeconds(5)).map(response -> GreetingResponse.newBuilder().setGreeting(randomGreeting()).build()).log();
+        return Flux.interval(Duration.ofSeconds(1)).map(response -> GreetingResponse.newBuilder().setGreeting(randomGreeting()).build()).log();
     }
 
     @Override

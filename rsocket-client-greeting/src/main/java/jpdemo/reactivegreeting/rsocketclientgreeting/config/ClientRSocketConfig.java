@@ -58,16 +58,4 @@ public class ClientRSocketConfig {
                 .connectTcp(helloServiceHostname, helloServicePort);
     }
 
-    private Long getNumberOfTries(Retry.RetrySignal rs) {
-        if (rs.totalRetries() < 3) {
-            return rs.totalRetries();
-        } else {
-            System.err.println("retries exhausted");
-            throw Exceptions.propagate(rs.failure());
-        }
-    }
-
-
-
-
 }
