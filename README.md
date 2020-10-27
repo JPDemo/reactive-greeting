@@ -14,13 +14,15 @@ Primarily:
 
 Secondary: 
 - [x] Multi project/module code coverage
-- [ ] Multi project/module package created (via GitHub actions)
-- [ ] Multi project/module docker creation 
-- [ ] Skaffold
+- [x] Multi project/module docker creation (via Jib)
+  - [ ] Create local docker images and test with K8
+  - [ ] Create images with github actions
+- [ ] Configure with Skaffold
 
 
 Next steps:
-- Create packages via Github actions
+- Create local docker images and test with K8
+
 
 ---
 
@@ -51,3 +53,15 @@ Jacoco config:
 
 Unit tests
 - https://josdem.io/techtalk/spring/spring_webflux_web_testing/
+
+Jib
+- https://github.com/GoogleContainerTools/jib/tree/master/examples/multi-module
+
+GitHub
+ - https://github.com/features/packages
+
+echo $PAT | docker login ghcr.io --username phanatic --password-stdin
+
+docker tag app ghcr.io/phanatic/app:1.0.0
+
+docker push ghcr.io/phanatic/app:1.0.0

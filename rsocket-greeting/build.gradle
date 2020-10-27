@@ -1,4 +1,9 @@
+plugins{
+	id 'com.google.cloud.tools.jib'
+}
 
+sourceCompatibility = '11'
+targetCompatibility = '11'
 
 dependencies {
 	api project(":services")
@@ -20,4 +25,16 @@ sourceSets{
 //Override default coverage threshold
 ext {
 	jacocoCoverageThreshold = 0.100
+}
+
+println "ghcr.io/${organisation}/${rootProject.name }/${project.name}:${version}"
+//jib.to.image = "ghcr.io/${organisation}/${project.name}:${version}"
+jib{
+	to{
+		image = "ghcr.io/${organisation}/${rootProject.name }/${project.name}:${version}"
+/*		auth{
+			username = System.getenv("GITHUB_ACTOR")
+			password = System.getenv("CR_PAT")
+		}*/
+	}
 }
