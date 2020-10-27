@@ -6,10 +6,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.rsocket.context.LocalRSocketServerPort;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.messaging.rsocket.RSocketRequester;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
+import reactor.core.publisher.Mono;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,9 +21,11 @@ import static org.junit.jupiter.api.Assertions.*;
 class ClientRSocketConfigTest {
 
 
+    @MockBean
+    Mono<RSocketRequester> mockRequester;
 
-    void connectToGreetingService(@Autowired RSocketRequester requester) {
-
+   // @Test
+    void connectToGreetingService() {
 
     }
 }
