@@ -19,7 +19,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class GreetingAdaptor {
 
 
-    private final RSocketRequester rSocketRequester;
+    private final Mono<RSocketRequester> rSocketRequester;
 
     /**
      * Greeting request / response
@@ -31,14 +31,13 @@ public class GreetingAdaptor {
      */
     public Mono<String> greetingRequestResponse(String name) {
         log.info("Adaptor - Request response received with name {}", name);
-        return rSocketRequester
-                .route("greeting.request")
+        return rSocketRequester.flatMap(req ->
+                req.route("greeting.request")
                 .data(requestBuilder(name))
                 .retrieveMono(GreetingResponse.class)
                 .log()
-                .map(response -> response.getGreeting());
+                .map(response -> response.getGreeting()));
     }
-
 
     /**
      * Greeting channel
@@ -63,13 +62,14 @@ public class GreetingAdaptor {
      * @return
      */
     public Flux<String> greetingChannel(Flux<GreetingRequest> requests) {
-        return rSocketRequester
-                .route("greeting.channel")
+        return rSocketRequester.flatMapMany( req ->
+                req.route("greeting.channel")
                 .data(requests)
                 .retrieveFlux(GreetingResponse.class)
                 .log()
-                .map(response -> response.getGreeting());
+                .map(response -> response.getGreeting()));
     }
+
 
     /**
      * Greeting fire and forget example - a log in this instance
@@ -80,12 +80,12 @@ public class GreetingAdaptor {
      */
     public void logGreeting(String name) {
         log.info("Adaptor - Log Request response log received with name {}", name);
-        rSocketRequester
-                .route("greeting.fireforget")
+        rSocketRequester.flatMap( req->
+                req.route("greeting.fireforget")
                 .data(requestBuilder(name))
                 .send()
                 .doOnSuccess(s -> log.info("Success {}", s))
-                .doOnError(e -> log.info("Error {}", e))
+                .doOnError(e -> log.info("Error {}", e)))
 
         ;
     }
@@ -101,29 +101,31 @@ public class GreetingAdaptor {
      */
     public Flux<String> randomGreetingsStream() {
         log.info("Adaptor - random greeting stream request received");
-        return rSocketRequester
-                .route("greeting.stream")
+        return rSocketRequester.flatMapMany(req ->
+                req.route("greeting.stream")
                 //.data(requests)
                 .retrieveFlux(GreetingResponse.class)
                 .log()
-                .map(response -> response.getGreeting());
+                .map(response -> response.getGreeting()));
     }
 
-    /**
+     /**
      * Random greeting response
      * Request: null
      * Response: mono
      *
      * @return
-     */
+
+      */
+
     public Mono<String> randomGreetingRequest() {
         log.info("Adaptor - random greeting request received");
-        return rSocketRequester
-                .route("greeting.random")
+        return rSocketRequester.flatMap(req ->
+                req.route("greeting.random")
                 //.data(requestBuilder(name))
                 .retrieveMono(GreetingResponse.class)
                 .log()
-                .map(response -> response.getGreeting());
+                .map(response -> response.getGreeting()));
     }
 
     /**

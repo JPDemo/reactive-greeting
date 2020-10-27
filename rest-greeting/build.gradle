@@ -15,8 +15,7 @@ sourceSets{
 	}
 }
 
-//Override default coverage threshold specified in jacoco-config
-/*
+//Expect 100% coverage
 ext {
-	jacocoCoverageThreshold = 0.0
-}*/
+	jacocoCoverageThreshold = 0.100
+}
