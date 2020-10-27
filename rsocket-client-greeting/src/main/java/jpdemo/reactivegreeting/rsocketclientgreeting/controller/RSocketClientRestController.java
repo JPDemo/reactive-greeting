@@ -1,7 +1,5 @@
 package jpdemo.reactivegreeting.rsocketclientgreeting.controller;
 
-import jpdemo.proto.greeting.v1.GreetingRequest;
-import jpdemo.proto.greeting.v1.GreetingServiceClient;
 import jpdemo.reactivegreeting.rsocketclientgreeting.adaptor.GreetingAdaptor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

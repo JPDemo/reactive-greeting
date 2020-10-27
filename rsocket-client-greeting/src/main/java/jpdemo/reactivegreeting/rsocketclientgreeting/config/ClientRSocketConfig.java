@@ -13,7 +13,11 @@ import org.springframework.http.codec.protobuf.ProtobufDecoder;
 import org.springframework.http.codec.protobuf.ProtobufEncoder;
 import org.springframework.messaging.rsocket.RSocketRequester;
 import org.springframework.util.MimeTypeUtils;
+import reactor.core.Exceptions;
+import reactor.core.publisher.Mono;
+import reactor.util.retry.Retry;
 
+import java.time.Duration;
 import java.time.Instant;
 
 @Configuration
@@ -28,9 +32,8 @@ public class ClientRSocketConfig {
     private int helloServicePort;
 
 
-
     @Bean
-    RSocketRequester connectToGreetingService() {
+    Mono<RSocketRequester> connectToGreetingService() {
         Instant time = Instant.now();
         Timestamp timestamp = Timestamp.newBuilder().setSeconds(time.getEpochSecond())
                 .setNanos(time.getNano()).build();
@@ -44,6 +47,7 @@ public class ClientRSocketConfig {
         return RSocketRequester.builder()
                 .setupRoute("greeting.setup")
                 .setupData(config)
+                .rsocketConnector(connector -> connector.reconnect(Retry.backoff(10, Duration.ofMillis(500))))
                 .dataMimeType(MimeTypeUtils.ALL)
                 .rsocketStrategies(builder -> {
                     builder.encoder(new ProtobufEncoder());
@@ -51,8 +55,16 @@ public class ClientRSocketConfig {
                     builder.encoder(new Jackson2JsonEncoder());
                     builder.decoder(new ProtobufDecoder());
                 })
-                .connectTcp(helloServiceHostname, helloServicePort)
-                .block();
+                .connectTcp(helloServiceHostname, helloServicePort);
+    }
+
+    private Long getNumberOfTries(Retry.RetrySignal rs) {
+        if (rs.totalRetries() < 3) {
+            return rs.totalRetries();
+        } else {
+            System.err.println("retries exhausted");
+            throw Exceptions.propagate(rs.failure());
+        }
     }
 
 
