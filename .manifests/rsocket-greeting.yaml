@@ -1,0 +1,48 @@
+## rsocket-greeting K8 Manifest
+# Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: rsocket-greeting
+  name: rsocket-greeting
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rsocket-greeting
+  template:
+    metadata:
+      labels:
+        app: rsocket-greeting
+    spec:
+      containers:
+        - name: rsocket-greeting
+          image: ghcr.io/jpdemo/reactive-greeting/rsocket-greeting
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: "1"
+            requests:
+              memory: 256Mi
+              cpu: "0.2"
+          ports:
+            - containerPort: 7000
+          #imagePullPolicy: Always
+---
+# Service
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: rsocket-greeting
+  labels:
+    app: rsocket-greeting
+    service: rsocket-greeting
+spec:
+  ports:
+    - protocol: TCP
+      port: 7000
+      name: tcp
+  selector:
+    app: rsocket-greeting

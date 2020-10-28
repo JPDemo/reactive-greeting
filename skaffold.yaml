@@ -1,0 +1,19 @@
+apiVersion: skaffold/v2beta7
+kind: Config
+metadata:
+  name: reactive-greeting
+build:
+  artifacts:
+    - image: ghcr.io/jpdemo/reactive-greeting/rest-greeting
+      jib:
+        project: rest-greeting
+    - image: ghcr.io/jpdemo/reactive-greeting/rsocket-client-greeting
+      jib:
+        project: rsocket-client-greeting
+    - image: ghcr.io/jpdemo/reactive-greeting/rsocket-greeting
+      jib:
+        project: rsocket-greeting
+deploy:
+  kubectl:
+    manifests:
+      - .manifests/*

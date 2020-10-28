@@ -66,7 +66,7 @@ public class DefaultGreetingService implements GreetingService {
         return Mono.just(Empty.newBuilder().build());
     }
 
-    private String getGreeting() {
+/*    private String getGreeting() {
 
         String greeting ;
         switch (locale) {
@@ -76,6 +76,26 @@ public class DefaultGreetingService implements GreetingService {
             default -> greeting = "Hello ";
         }
 
+        return greeting;
+    }*/
+
+    private String getGreeting() {
+
+        String greeting;
+        switch (locale) {
+            case LOCALE_EN:
+                greeting = "Hi ";
+                break;
+            case LOCALE_DE:
+                greeting = "Guten tag ";
+                break;
+            case LOCALE_ES:
+                greeting = "Hola ";
+                break;
+            default:
+                greeting = "Hello ";
+
+        }
         return greeting;
     }
 }
