@@ -15,9 +15,10 @@ Primarily:
 Secondary: 
 - [x] Multi project/module code coverage
 - [x] Multi project/module docker creation (via Jib)
-  - [ ] Create local docker images and test with K8
+  - [x] Create local docker images
   - [ ] Create images with github actions
-- [ ] Configure with Skaffold
+- [x] Configure with Skaffold
+- [ ] Configure with Istio gateway
 
 
 Next steps:
@@ -35,29 +36,32 @@ Next steps:
 
 ---
 
-###Resources
+###Resources/Notes
 
-Reactive
+####ReadME
+- https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#images
+
+####Reactive
 - https://docs.spring.io/spring-framework/docs/current/spring-framework-reference/web-reactive.html
 
-RSocket
+####RSocket
 - https://dzone.com/articles/reactive-service-to-service-communication-with-rso-3
 - http://www.vinsguru.com/rsocket-integrating-with-spring-boot/
 
-RSocket Protobuf
+####RSocket Protobuf
 - https://docs.netifi.com/1.5.3/protobuf_rsocket/
 
-Jacoco config:
+####Jacoco config:
 - https://medium.com/swlh/measuring-unit-test-coverage-in-multi-module-android-projects-using-jacoco-part-2-352ef949ecfb
 - https://gist.github.com/fraggjkee/50f351f6ef4b75fea6d20d87dbba7f85
 
-Unit tests
+####Unit tests
 - https://josdem.io/techtalk/spring/spring_webflux_web_testing/
 
-Jib
+####Jib
 - https://github.com/GoogleContainerTools/jib/tree/master/examples/multi-module
 
-GitHub
+####GitHub Container Registry/Packages
  - https://github.com/features/packages
 
 echo $PAT | docker login ghcr.io --username phanatic --password-stdin
@@ -65,3 +69,16 @@ echo $PAT | docker login ghcr.io --username phanatic --password-stdin
 docker tag app ghcr.io/phanatic/app:1.0.0
 
 docker push ghcr.io/phanatic/app:1.0.0
+
+####
+-https://kubernetes.io/docs/reference/kubectl/cheatsheet/
+
+####Skaffold
+- https://skaffold.dev/
+- https://skaffold.dev/docs/references/yaml/
+
+| Commands                        | Description                             |
+|---------------------------------|-----------------------------------------|
+| skaffold init --XXenableJibInit | Initialise                              |
+| skaffold dev                    | Apply K8s and monitor code for changes  |
+

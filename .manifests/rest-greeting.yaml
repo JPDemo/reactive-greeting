@@ -1,0 +1,49 @@
+## rest-greeting K8 Manifest
+# Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: rest-greeting
+  name: rest-greeting
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rest-greeting
+  template:
+    metadata:
+      labels:
+        app: rest-greeting
+    spec:
+      containers:
+        - name: rest-greeting
+          image: ghcr.io/jpdemo/reactive-greeting/rest-greeting
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: "1"
+            requests:
+              memory: 256Mi
+              cpu: "0.2"
+          ports:
+            - name: http
+              containerPort: 8080
+          #imagePullPolicy: Always
+---
+# Service
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: rest-greeting
+  labels:
+    app: rest-greeting
+    service: rest-greeting
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+  selector:
+    app: rest-greeting

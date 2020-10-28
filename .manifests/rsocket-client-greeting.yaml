@@ -1,0 +1,42 @@
+## rsocket-client-greeting K8 Manifest
+# Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: rsocket-client-greeting
+  name: rsocket-client-greeting
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rsocket-client-greeting
+  template:
+    metadata:
+      labels:
+        app: rsocket-client-greeting
+    spec:
+      containers:
+        - name: rsocket-client-greeting
+          image: ghcr.io/jpdemo/reactive-greeting/rsocket-client-greeting
+          ports:
+            - name: http
+              containerPort: 8080
+          #imagePullPolicy: Always
+---
+# Service
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: rsocket-client-greeting
+  labels:
+    app: rsocket-client-greeting
+    service: rsocket-client-greeting
+spec:
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+  selector:
+    app: rsocket-client-greeting
