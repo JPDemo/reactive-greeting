@@ -18,7 +18,7 @@ Secondary:
   - [x] Create local docker images
   - [ ] Create images with github actions
 - [x] Configure with Skaffold
-- [ ] Configure with Istio gateway
+- [x] Configure with Istio gateway
 
 
 Next steps:
@@ -70,7 +70,7 @@ docker tag app ghcr.io/phanatic/app:1.0.0
 
 docker push ghcr.io/phanatic/app:1.0.0
 
-####
+#### K8
 -https://kubernetes.io/docs/reference/kubectl/cheatsheet/
 
 ####Skaffold
@@ -82,3 +82,11 @@ docker push ghcr.io/phanatic/app:1.0.0
 | skaffold init --XXenableJibInit | Initialise                              |
 | skaffold dev                    | Apply K8s and monitor code for changes  |
 
+####Istio
+
+- https://istio.io/latest/docs/reference/config/networking/virtual-service/
+- Dashboad: istioctl dashboard kiali
+
+####Docker
+Container comms issue:
+ - https://maximorlov.com/4-reasons-why-your-docker-containers-cant-talk-to-each-other/

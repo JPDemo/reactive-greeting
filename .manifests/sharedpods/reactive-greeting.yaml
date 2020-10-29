@@ -1,0 +1,107 @@
+## reactive-greeting shared pod K8 Manifest
+# Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: reactive-greeting
+  name: reactive-greeting
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: reactive-greeting
+  template:
+    metadata:
+      labels:
+        app: reactive-greeting
+    spec:
+      containers:
+        - name: rest-greeting
+          image: ghcr.io/jpdemo/reactive-greeting/rest-greeting
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: "1"
+            requests:
+              memory: 256Mi
+              cpu: "0.2"
+          ports:
+            - name: http
+              containerPort: 8080
+          #imagePullPolicy: Always
+        - name: rsocket-client-greeting
+          image: ghcr.io/jpdemo/reactive-greeting/rsocket-client-greeting
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: "1"
+            requests:
+              memory: 256Mi
+              cpu: "0.2"
+          ports:
+            - name: http
+              containerPort: 8080
+            #imagePullPolicy: Always
+        - name: rsocket-greeting
+          image: ghcr.io/jpdemo/reactive-greeting/rsocket-greeting
+          resources:
+            limits:
+              memory: 512Mi
+              cpu: "1"
+            requests:
+              memory: 256Mi
+              cpu: "0.2"
+          ports:
+            - containerPort: 7000
+---
+# Service
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: rest-greeting
+  labels:
+    app: rest-greeting
+    service: rest-greeting
+spec:
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: reactive-greeting
+---
+# Service
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: rsocket-client-greeting
+  labels:
+    app: rsocket-client-greeting
+    service: rsocket-client-greeting
+spec:
+  ports:
+    - name: http
+      port: 8081
+      targetPort: 8081
+  selector:
+    app: reactive-greeting
+---
+# Service
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: rsocket-greeting
+  labels:
+    app: rsocket-greeting
+    service: rsocket-greeting
+spec:
+  ports:
+    - protocol: TCP
+      port: 7000
+      name: tcp
+  selector:
+    app: reactive-greeting

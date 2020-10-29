@@ -22,6 +22,11 @@ public class RSocketClientRestController {
         return "Welcome to greeting rsocket rest client";
     }
 
+    @GetMapping("/")
+    public String connection2(){
+        return "Welcome to greeting rsocket rest client /endpoint";
+    }
+
     @GetMapping("request")
     public Mono<String> greetingRequestResponse(@RequestParam(value = "name", defaultValue = "World") String name){
 
