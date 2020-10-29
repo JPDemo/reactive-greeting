@@ -61,7 +61,7 @@ Next steps:
 #### Jib
 - https://github.com/GoogleContainerTools/jib/tree/master/examples/multi-module
 
-####GitHub Container Registry/Packages
+#### GitHub Container Registry/Packages
  - https://github.com/features/packages
 
 echo $PAT | docker login ghcr.io --username phanatic --password-stdin
