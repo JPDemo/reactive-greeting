@@ -36,29 +36,29 @@ Next steps:
 
 ---
 
-###Resources/Notes
+### Resources/Notes
 
-####ReadME
+#### ReadME
 - https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#images
 
-####Reactive
+#### Reactive
 - https://docs.spring.io/spring-framework/docs/current/spring-framework-reference/web-reactive.html
 
-####RSocket
+#### RSocket
 - https://dzone.com/articles/reactive-service-to-service-communication-with-rso-3
 - http://www.vinsguru.com/rsocket-integrating-with-spring-boot/
 
-####RSocket Protobuf
+#### RSocket Protobuf
 - https://docs.netifi.com/1.5.3/protobuf_rsocket/
 
-####Jacoco config:
+#### Jacoco config:
 - https://medium.com/swlh/measuring-unit-test-coverage-in-multi-module-android-projects-using-jacoco-part-2-352ef949ecfb
 - https://gist.github.com/fraggjkee/50f351f6ef4b75fea6d20d87dbba7f85
 
-####Unit tests
+#### Unit tests
 - https://josdem.io/techtalk/spring/spring_webflux_web_testing/
 
-####Jib
+#### Jib
 - https://github.com/GoogleContainerTools/jib/tree/master/examples/multi-module
 
 ####GitHub Container Registry/Packages
@@ -82,11 +82,11 @@ docker push ghcr.io/phanatic/app:1.0.0
 | skaffold init --XXenableJibInit | Initialise                              |
 | skaffold dev                    | Apply K8s and monitor code for changes  |
 
-####Istio
+#### Istio
 
 - https://istio.io/latest/docs/reference/config/networking/virtual-service/
 - Dashboad: istioctl dashboard kiali
 
-####Docker
+#### Docker
 Container comms issue:
  - https://maximorlov.com/4-reasons-why-your-docker-containers-cant-talk-to-each-other/
