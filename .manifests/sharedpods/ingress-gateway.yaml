@@ -1,0 +1,48 @@
+## Ingress Gateway
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: reactive-greeting-gateway
+spec:
+  selector:
+    istio: ingressgateway # use istio default controller
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - "*"
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: rest-greetings-virtualservice
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - reactive-greeting-gateway
+  http:
+    - name: "rest-greeting-routes"
+      match:
+        - uri:
+            prefix: "/rest/"
+      rewrite:
+        uri: "/"
+      route:
+        - destination:
+            host: rest-greeting
+            port:
+              number: 8080
+    - name: "rsocket-greeting-routes"
+      match:
+        - uri:
+            prefix: "/rsocket/"
+      rewrite:
+        uri: "/"
+      route:
+        - destination:
+            host: rsocket-client-greeting
+            port:
+              number: 8081

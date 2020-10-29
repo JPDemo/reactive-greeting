@@ -16,4 +16,5 @@ build:
 deploy:
   kubectl:
     manifests:
-      - .manifests/*
+#      - .manifests/individualpods* #Getting communication issue between pods. Trying single pod to see if works
+      - .manifests/sharedpods*

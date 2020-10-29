@@ -47,6 +47,22 @@ class RSocketClientRestControllerTest {
     }
 
     @Test
+    void connection2() {
+
+        verifyNoInteractions(mockAdaptor);
+
+        webClient.get()
+                .uri(uriBuilder -> uriBuilder.path("/").build())
+                .exchange()
+                // then
+                .expectStatus()
+                .isOk()
+                .expectBody(String.class)
+                .value(equalTo("Welcome to greeting rsocket rest client /endpoint"));
+
+    }
+
+    @Test
     @DisplayName("Greeting defaults to request name of World")
     void greetingRequestResponse() {
         // given

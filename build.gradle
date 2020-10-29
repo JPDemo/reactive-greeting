@@ -26,8 +26,7 @@ dependencyManagement {
 allprojects {
     group = 'jpdemo.reactive-greeting'
     version = '0.0.1-SNAPSHOT'
-    sourceCompatibility = '11'
-    targetCompatibility = '11'
+
 }
 repositories {
     mavenCentral()
@@ -39,6 +38,9 @@ subprojects {
     apply plugin: 'java-library'
     apply plugin: 'java'
     apply plugin: 'jacoco'
+
+    sourceCompatibility = '11'
+    targetCompatibility = '11'
 
     repositories {
         mavenCentral()
