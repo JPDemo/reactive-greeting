@@ -42,7 +42,7 @@ subprojects {
     apply plugin: 'java'
     apply plugin: 'jacoco'
   //  apply plugin: 'fr.brouillard.oss.gradle.jgitver'
- //   apply plugin: 'net.researchgate.release'
+    apply plugin: 'net.researchgate.release'
 
     sourceCompatibility = '11'
     targetCompatibility = '11'
@@ -99,7 +99,7 @@ release {
         requireBranch='main'
     }
 }
-afterReleaseBuild.dependsOn 'jib'
+
 
 bootJar {
     enabled = false

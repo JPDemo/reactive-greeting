@@ -36,3 +36,4 @@ jib{
 		}*/
 	}
 }
+afterReleaseBuild.dependsOn 'jib'
