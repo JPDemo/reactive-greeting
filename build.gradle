@@ -99,7 +99,7 @@ release {
         requireBranch='main'
     }
 }
-afterReleaseBuild.dependsOn jib
+afterReleaseBuild.dependsOn 'jib'
 
 bootJar {
     enabled = false
