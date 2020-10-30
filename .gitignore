@@ -1,2 +1,6 @@
 /dev.properties
 /build/
+/.gradle/buildOutputCleanup/
+/.gradle/checksums/
+/.gradle/configuration-cache/
+/.gradle/vcs-1/

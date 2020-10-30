@@ -8,6 +8,7 @@ plugins {
     id 'org.springframework.boot' version "${springBootVersion}"
     id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
     id 'com.google.cloud.tools.jib' version '2.6.0' apply(false)
+    id "fr.brouillard.oss.gradle.jgitver" version "0.9.1"
     id 'net.researchgate.release' version '2.8.1'
 
 }
@@ -39,6 +40,7 @@ subprojects {
     apply plugin: 'java-library'
     apply plugin: 'java'
     apply plugin: 'jacoco'
+    apply plugin: 'fr.brouillard.oss.gradle.jgitver'
     apply plugin: 'net.researchgate.release'
 
     sourceCompatibility = '11'
@@ -70,6 +72,9 @@ subprojects {
         testCompile 'org.assertj:assertj-core:3.11.1'
     }
 
+    jgitver {
+        mavenLike true
+    }
 
     test {
         useJUnitPlatform()
@@ -84,16 +89,16 @@ subprojects {
     afterEvaluate { project ->
         project.apply from: '../.jacoco/subproject-jacoco-report.gradle'
     }
-
-
 /*    test.useTestNG()*/
 }
+
 
 release {
     git{
         requireBranch='main'
     }
 }
+
 
 
 bootJar {
