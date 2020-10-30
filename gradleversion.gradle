@@ -1,0 +1,52 @@
+apply plugin: 'java'
+
+task patchVersion {
+    doLast{
+        Properties props = new Properties()
+        File propsFile = new File('gradle.properties')
+        props.load(propsFile.newDataInputStream())
+        def stable_project_version = props.getProperty('projectVersion') as String
+        if (stable_project_version.indexOf('-SNAPSHOT') > 0){
+            throw new GradleException('Cannot patch a non SNAPSHOT version')
+        } else {
+            def (major, minor, patch) = stable_project_version.tokenize('.')
+            patch = String.valueOf(patch.toInteger() + 1)
+            String snapshot_project_version = major + '.' + minor + '.' + patch + '-SNAPSHOT'
+            props.setProperty('projectVersion', snapshot_project_version)
+            props.store(propsFile.newWriter(), null)
+            println(snapshot_project_version)
+        }
+    }
+}
+
+task releaseVersion {
+    doLast{
+        Properties props = new Properties()
+        File propsFile = new File('gradle.properties')
+        props.load(propsFile.newDataInputStream())
+        def snapshot_project_version = props.getProperty('projectVersion') as String
+        if (snapshot_project_version.indexOf('-SNAPSHOT') > 0){
+            def stable_project_version = snapshot_project_version - '-SNAPSHOT'
+            props.setProperty('projectVersion', stable_project_version)
+            props.store(propsFile.newWriter(), null)
+            println(stable_project_version)
+        } else {
+            throw new GradleException('Cannot release a non SNAPSHOT version')
+        }
+    }
+}
+
+task buildVersion{
+    mustRunAfter(build)
+    doLast {
+        Properties props = new Properties()
+        File propsFile = new File('gradle.properties')
+        props.load(propsFile.newDataInputStream())
+        def version = props.getProperty('buildVersion') as Integer
+        version +=1
+        props.setProperty('buildVersion', version.toString())
+        props.store(propsFile.newWriter(), null)
+        println(version)
+    }
+
+}

@@ -9,6 +9,7 @@ Possible options:
         - https://dzone.com/articles/how-to-understand-and-setup-kubernetes-networking
         - https://www.mirantis.com/blog/multi-container-pods-and-container-communication-in-kubernetes/
         - https://maximorlov.com/4-reasons-why-your-docker-containers-cant-talk-to-each-other/
+        - https://medium.com/google-cloud/understanding-kubernetes-networking-services-f0cb48e4cc82
 
 For now I have option 1 working with manifests under 'sharedpods' folder. 
 

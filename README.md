@@ -2,6 +2,7 @@
 
 Demo reactive rsocket spring boot project. 
 
+
 ### Goal
 
 The goal of this project is to allow me to experiment with:
@@ -90,3 +91,8 @@ docker push ghcr.io/phanatic/app:1.0.0
 #### Docker
 Container comms issue:
  - https://maximorlov.com/4-reasons-why-your-docker-containers-cant-talk-to-each-other/
+
+ 
+####Gradle
+ - https://github.com/jaredsburrows/cs-interview-questions
+
