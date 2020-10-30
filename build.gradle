@@ -26,7 +26,7 @@ dependencyManagement {
 
 allprojects {
     group = 'jpdemo.reactive-greeting'
-    version = '0.0.2-SNAPSHOT'
+    version = "${version}"
 
 }
 repositories {
@@ -56,11 +56,6 @@ subprojects {
         }
     }
 
-    release{
-        git{
-            requireBranch='main'
-        }
-    }
 
 
 
@@ -93,6 +88,13 @@ subprojects {
 
 /*    test.useTestNG()*/
 }
+
+release {
+    git{
+        requireBranch='main'
+    }
+}
+
 
 bootJar {
     enabled = false
