@@ -94,7 +94,7 @@ subprojects {
         //generate jacoco report at sub project level
         project.apply from: '../.jacoco/subproject-jacoco-report.gradle'
 
-        println "${project} boot jar enabled: project.bootJar.enabled"
+        println "${project} boot jar enabled: ${project.bootJar.enabled}"
         if(project.bootJar.enabled) {
 //            println "ghcr.io/${organisation}/${rootProject.name }/${project.name}:${version}"
 //            apply plugin: 'com.google.cloud.tools.jib'
