@@ -8,6 +8,7 @@ plugins {
     id 'org.springframework.boot' version "${springBootVersion}"
     id 'io.spring.dependency-management' version "${dependencyManagementVersion}"
     id 'com.google.cloud.tools.jib' version '2.6.0' apply(false)
+    id 'net.researchgate.release' version '2.8.1'
 
 }
 
@@ -25,7 +26,7 @@ dependencyManagement {
 
 allprojects {
     group = 'jpdemo.reactive-greeting'
-    version = '0.0.1-SNAPSHOT'
+    version = '0.0.2-SNAPSHOT'
 
 }
 repositories {
@@ -38,6 +39,7 @@ subprojects {
     apply plugin: 'java-library'
     apply plugin: 'java'
     apply plugin: 'jacoco'
+    apply plugin: 'net.researchgate.release'
 
     sourceCompatibility = '11'
     targetCompatibility = '11'
@@ -53,6 +55,13 @@ subprojects {
             }
         }
     }
+
+    release{
+        git{
+            requireBranch='main'
+        }
+    }
+
 
 
     dependencies{
