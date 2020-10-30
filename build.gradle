@@ -103,7 +103,13 @@ subprojects {
 //                    image = "ghcr.io/${organisation}/${rootProject.name }/${project.name}:${version}"
 //                }
 //            }
-            afterReleaseBuild.dependsOn 'jib'
+         //   afterReleaseBuild.dependsOn 'jib'
+        //    afterReleaseBuild.dependsOn( project.tasks.findByName('jib'))
+        //    jibConfig
+            if(project.tasks.findByName('jib')!=null){
+                println "jib config - hin found"
+                afterReleaseBuild.dependsOn(project.tasks.findByName('jib'))
+            }
         }
     }
 
@@ -111,6 +117,17 @@ subprojects {
 /*    test.useTestNG()*/
 }
 
+/*task jibConfig{
+    mustRunAfter(build)
+    println "jib config ${project} boot jar enabled: ${project.bootJar.enabled}"
+    if(project.bootJar.enabled) {
+        project.tasks.findByName('jib')
+    }
+    if(project.tasks.findByName('jib')!=null){
+        println "jib config - hin found"
+        afterReleaseBuild.dependsOn(project.tasks.findByName('jib'))
+    }
+}*/
 
 release {
     git{
@@ -119,9 +136,11 @@ release {
 }
 
 
+
 bootJar {
     enabled = false
 }
 
 //generate jacoco report at root level
 apply from: './.jacoco/root-jacoco-report.gradle'
+
