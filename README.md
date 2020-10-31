@@ -24,7 +24,10 @@ Secondary:
 
 
 Next steps:
-- Create local docker images and test with K8
+- Unable to automate release. 
+Getting error 'You have uncommitted files'. 
+Requires investigation - may need to change release plugin.  
+
 
 
 ---
@@ -96,4 +99,13 @@ Container comms issue:
  
 #### Gradle
  - https://github.com/jaredsburrows/cs-interview-questions
-
+ - Common gradle scripts
+   - https://github.com/tomasbjerre/gradle-scripts/tree/master/src/main/resources
+   - https://github.com/tomasbjerre/violations-lib 
+ 
+#### Release commands 
+ - Plugin: https://github.com/researchgate/gradle-release
+ - Works locally, but not in git update actions. Get You have uncommitted files error.  
+ - Commands:
+    - gradlew release -Prelease.useAutomaticVersion=true
+    - gradlew release -Prelease.useAutomaticVersion=true -Prelease.releaseVersion=1.0.0 -Prelease.newVersion=1.1.0-SNAPSHOT
