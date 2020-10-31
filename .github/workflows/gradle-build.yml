@@ -5,17 +5,20 @@ name: Java CI with Gradle
 
 on:
   push:
-    branches:
-      - main
-      - 'feature/**'
+##    branches:
+##      - main
+##      - 'feature/**'
 ##    paths:
 ##      - '!.github/**'    
   pull_request:
-    branches:
-      - main
-      - 'feature/**'
+##    branches:
+##      - main
+##      - 'feature/**'
 ##    paths:
 ##      - '!.github/**'
+## Runs at 0:00 UTC on the 1st of every month. Ensures depencies,jobs still run
+  schedule:
+    - cron: '0 0 1 * *'
 
 jobs:
   build:
