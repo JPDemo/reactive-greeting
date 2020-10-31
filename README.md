@@ -16,8 +16,9 @@ Primarily:
 Secondary: 
 - [x] Multi project/module code coverage
 - [x] Multi project/module docker creation (via Jib)
-  - [x] Create local docker images
-  - [ ] Create images with github actions
+  - [x] Create docker containers locally
+  - [x] Publish docker containers to github container registry
+  - [ ] Create release github action that publishes containers
 - [x] Configure with Skaffold
 - [x] Configure with Istio gateway
 
@@ -74,7 +75,7 @@ docker push ghcr.io/phanatic/app:1.0.0
 #### K8
 -https://kubernetes.io/docs/reference/kubectl/cheatsheet/
 
-####Skaffold
+#### Skaffold
 - https://skaffold.dev/
 - https://skaffold.dev/docs/references/yaml/
 
@@ -93,6 +94,6 @@ Container comms issue:
  - https://maximorlov.com/4-reasons-why-your-docker-containers-cant-talk-to-each-other/
 
  
-####Gradle
+#### Gradle
  - https://github.com/jaredsburrows/cs-interview-questions
 

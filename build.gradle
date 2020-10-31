@@ -46,6 +46,7 @@ subprojects {
         }
     }
 
+
     dependencies{
         annotationProcessor 'org.projectlombok:lombok'
         implementation "jpdemo:proto:1.5"
@@ -70,17 +71,20 @@ subprojects {
         }
     }
 
+    if(project.tasks.findByName('jib')!=null) {
+        println "sub projects jib config found - attaching afterReleaseBuild hook"
+        afterReleaseBuild.dependsOn(project.tasks.findByName('jib'))
+    }
 
+    project.apply from: '../.jacoco/subproject-jacoco-report.gradle'
     afterEvaluate { project ->
         //generate jacoco report at sub project level
-        project.apply from: '../.jacoco/subproject-jacoco-report.gradle'
-
+        //project.apply from: '../.jacoco/subproject-jacoco-report.gradle'
+        println "After Evaluate"
         // add jib hook so it executes during a release
-        if(project.bootJar.enabled) {
-            if(project.tasks.findByName('jib')!=null){
-                println "jib config - hin found"
-                afterReleaseBuild.dependsOn(project.tasks.findByName('jib'))
-            }
+        if(project.tasks.findByName('jib')!=null) {
+            println "sub projects jib config found - attaching afterReleaseBuild hook"
+            afterReleaseBuild.dependsOn(project.tasks.findByName('jib'))
         }
     }
 
