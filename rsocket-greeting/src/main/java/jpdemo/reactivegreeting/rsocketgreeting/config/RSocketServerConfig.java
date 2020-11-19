@@ -4,7 +4,9 @@ import io.rsocket.RSocket;
 import io.rsocket.RSocketFactory;
 import io.rsocket.rpc.rsocket.RequestHandlingRSocket;
 import io.rsocket.transport.netty.server.TcpServerTransport;
+import jpdemo.proto.context.v1.MessageContext;
 import jpdemo.proto.greeting.v1.GreetingServiceServer;
+import jpdemo.proto.greeting.v1.GreetingSetup;
 import jpdemo.reactivegreeting.service.greeting.DefaultGreetingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -15,9 +17,11 @@ import org.springframework.http.codec.json.Jackson2JsonDecoder;
 import org.springframework.http.codec.json.Jackson2JsonEncoder;
 import org.springframework.http.codec.protobuf.ProtobufDecoder;
 import org.springframework.http.codec.protobuf.ProtobufEncoder;
+import org.springframework.messaging.rsocket.DefaultMetadataExtractor;
 import org.springframework.messaging.rsocket.RSocketRequester;
 import org.springframework.messaging.rsocket.RSocketStrategies;
 import org.springframework.messaging.rsocket.annotation.support.RSocketMessageHandler;
+import org.springframework.util.MimeType;
 import org.springframework.util.MimeTypeUtils;
 import reactor.core.publisher.Mono;
 
@@ -28,9 +32,14 @@ public class RSocketServerConfig {
 
     @Bean
     public RSocketMessageHandler rsocketMessageHandler(RSocketStrategies rSocketStrategies) {
+        var protoMimeType = MimeType.valueOf("application/x-protobuf");
         RSocketMessageHandler handler = new RSocketMessageHandler();
         handler.setRSocketStrategies(rSocketStrategies);
+        var metadataExtractor = new DefaultMetadataExtractor(new ProtobufDecoder());
+        metadataExtractor.metadataToExtract(protoMimeType,  MessageContext.class,"messageContext");
+      //  metadataExtractor.metadataToExtract(protoMimeType,  GreetingSetup.class,"greetingSetup");
 
+        handler.setMetadataExtractor(metadataExtractor);
         return handler;
     }
 
@@ -40,12 +49,7 @@ public class RSocketServerConfig {
         return RSocketStrategies.builder()
                 .decoders(decoders -> {
                     decoders.add((new ProtobufDecoder()));
-                    decoders.add(new Jackson2JsonDecoder());
-                    decoders.add(new Jackson2CborDecoder());
                 }).encoders( encoders -> {
-                    encoders.add(new ProtobufEncoder());
-                    encoders.add(new Jackson2CborEncoder());
-                    encoders.add(new Jackson2JsonEncoder());
                     encoders.add(new ProtobufEncoder());
         })
                 .build();

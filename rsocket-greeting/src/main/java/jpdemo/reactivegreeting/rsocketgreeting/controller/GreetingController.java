@@ -2,6 +2,7 @@ package jpdemo.reactivegreeting.rsocketgreeting.controller;
 
 
 import com.google.protobuf.Empty;
+import jpdemo.proto.context.v1.MessageContext;
 import jpdemo.proto.greeting.v1.GreetingRequest;
 import jpdemo.proto.greeting.v1.GreetingResponse;
 import jpdemo.proto.greeting.v1.GreetingSetup;
@@ -10,6 +11,7 @@ import jpdemo.reactivegreeting.service.randomgreeting.DefaultRandomGreetingServi
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.reactivestreams.Publisher;
+import org.springframework.messaging.handler.annotation.Headers;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.rsocket.annotation.ConnectMapping;
 import org.springframework.stereotype.Controller;
@@ -20,6 +22,7 @@ import reactor.core.publisher.Mono;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Map;
 
 
 @Controller
@@ -44,10 +47,17 @@ public class GreetingController {
                 .toLocalDateTime();
     }
 
+    @MessageMapping({"greeting.request"})
+    public Mono<GreetingResponse> greetingRequestResponse(@Headers Map<String, Object> metadata, GreetingRequest request){
 
-    @MessageMapping("greeting.request")
-    public Mono<GreetingResponse> greetingRequestResponse(GreetingRequest request){
         log.info("Connection start timestamp "+connectionInitiation);
+        var messageContext = (MessageContext)metadata.get("messageContext");
+        if(messageContext!=null){
+            log.info("Retrieved meta data "+messageContext);
+        }else{
+            log.info("No message context meta data supplied");
+        }
+
         return greetingService.greeting(request,null);
     }
 
