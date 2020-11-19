@@ -99,7 +99,7 @@ class GreetingControllerITest {
     @Test
     void greetingRequestResponseWithoutMetaData() {
 
-              var request = GreetingRequest.newBuilder().setName(NAME).build();
+        var request = GreetingRequest.newBuilder().setName(NAME).build();
         var response = monoRequester.flatMap(requester ->
                 requester
                         .route("greeting.request")
@@ -116,12 +116,10 @@ class GreetingControllerITest {
 
     }
 
-    @Test
-    void testGreetingRequestResponse() {
-    }
 
     @Test
     void greetingChannel() {
+        var route = "greeting.channel";
     }
 
     @Test

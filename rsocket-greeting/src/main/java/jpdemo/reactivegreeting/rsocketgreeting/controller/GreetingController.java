@@ -36,53 +36,53 @@ public class GreetingController {
     private LocalDateTime connectionInitiation;  // value is assigned during SETUP frame
 
     @ConnectMapping("greeting.setup")
-    public void setup(GreetingSetup config){
+    public void setup(GreetingSetup config) {
 
-        Assert.notNull(config,"Config should not be null");
+        Assert.notNull(config, "Config should not be null");
         greetingService.setup(config);
         var tStamp = config.getInitiated();
         connectionInitiation = Instant
-                .ofEpochSecond(tStamp.getSeconds(),tStamp.getNanos())
+                .ofEpochSecond(tStamp.getSeconds(), tStamp.getNanos())
                 .atZone(ZoneId.systemDefault())
                 .toLocalDateTime();
     }
 
     @MessageMapping({"greeting.request"})
-    public Mono<GreetingResponse> greetingRequestResponse(@Headers Map<String, Object> metadata, GreetingRequest request){
+    public Mono<GreetingResponse> greetingRequestResponse(@Headers Map<String, Object> metadata, GreetingRequest request) {
 
-        log.info("Connection start timestamp "+connectionInitiation);
-        var messageContext = (MessageContext)metadata.get("messageContext");
-        if(messageContext!=null){
-            log.info("Retrieved meta data "+messageContext);
-        }else{
+        log.info("Connection start timestamp " + connectionInitiation);
+        var messageContext = metadata != null ? (MessageContext) metadata.get("messageContext") : null;
+        if (messageContext != null) {
+            log.info("Retrieved meta data " + messageContext);
+        } else {
             log.info("No message context meta data supplied");
         }
 
-        return greetingService.greeting(request,null);
+        return greetingService.greeting(request, null);
     }
 
     @MessageMapping("greeting.channel")
-    public Flux<GreetingResponse> greetingChannel(Publisher<GreetingRequest> requests){
-        log.info("Connection start timestamp "+connectionInitiation);
-        return greetingService.greetings(requests,null);
+    public Flux<GreetingResponse> greetingChannel(Publisher<GreetingRequest> requests) {
+        log.info("Connection start timestamp " + connectionInitiation);
+        return greetingService.greetings(requests, null);
     }
 
     @MessageMapping("greeting.fireforget")
-    public Mono<Empty> greetingLog(GreetingRequest request){
-        log.info("Connection start timestamp "+connectionInitiation);
-        return greetingService.logGreeting(request,null);
+    public Mono<Empty> greetingLog(GreetingRequest request) {
+        log.info("Connection start timestamp " + connectionInitiation);
+        return greetingService.logGreeting(request, null);
     }
 
     @MessageMapping("greeting.stream")
-    public Flux<GreetingResponse> randomGreetings(){
-        log.info("Connection start timestamp "+connectionInitiation);
-        return randomGreetingService.randomGreetings(null,null);
+    public Flux<GreetingResponse> randomGreetings() {
+        log.info("Connection start timestamp " + connectionInitiation);
+        return randomGreetingService.randomGreetings(null, null);
     }
 
     @MessageMapping("greeting.random")
-    public Mono<GreetingResponse> randomGreeting(){
-        log.info("Connection start timestamp "+connectionInitiation);
-        return randomGreetingService.randomGreeting(null,null);
+    public Mono<GreetingResponse> randomGreeting() {
+        log.info("Connection start timestamp " + connectionInitiation);
+        return randomGreetingService.randomGreeting(null, null);
     }
 
 }
