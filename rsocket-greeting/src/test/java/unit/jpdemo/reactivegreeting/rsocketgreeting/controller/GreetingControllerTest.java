@@ -75,7 +75,7 @@ class GreetingControllerTest {
         when(greetingService.greeting(request, null)).thenReturn(Mono.just(mockResponse));
 
         // when
-        var response = classUnderTest.greetingRequestResponse(request).block();
+        var response = classUnderTest.greetingRequestResponse(null,request).block();
 
         //then
         Mockito.verify(greetingService).greeting(request, null);
